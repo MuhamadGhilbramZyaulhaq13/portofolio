@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Muhamad Ghilbram Zyaulhaq.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg:           #0C0C0B;
+  --bg-surface:   #131311;
+  --bg-card:      #1B1B18;
+  --text:         #E2DDD4;
+  --text-muted:   #78736A;
+  --text-dim:     #38352F;
+  --accent:       #5D6844;
+  --accent-lt:    #7A8A58;
+  --gold:         #A89060;
+  --gold-dim:     #5C4F34;
+  --border:       #252520;
+  --border-mid:   #343430;
+  --shadow:       #3E4E20;
+  --font:         'Space Grotesk', system-ui, sans-serif;
+  --mono:         'JetBrains Mono', monospace;
+}
+
+/* ─── RESET ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAVIGATION ─────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.1rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: rgba(12, 12, 11, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-logo::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--accent-lt);
+  border-radius: 50%;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--bg) !important;
+  background: var(--accent-lt);
+  padding: 0.45rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--accent-lt);
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--gold) !important; border-color: var(--gold) !important; color: var(--bg) !important; }
+
+/* ─── HERO ───────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  padding: 6rem 2.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+/* Blueprint dot grid */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--text-dim) 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
+  z-index: 0;
+}
+/* Vignette fade */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 75% 70% at 75% 50%, transparent 30%, var(--bg) 75%);
+  z-index: 1;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+}
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent-lt);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 2rem;
+  height: 1px;
+  background: var(--accent-lt);
+}
+.hero-headline {
+  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  font-weight: 700;
+  line-height: 0.93;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 2rem;
+}
+/* Signature: outline text on "Creator." */
+.hero-headline .word-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--accent-lt);
+  letter-spacing: -0.03em;
+}
+.hero-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 460px;
+  line-height: 1.85;
+  margin-bottom: 2.75rem;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--accent);
+}
+.hero-desc strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.8rem;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid var(--text);
+  box-shadow: 4px 4px 0 var(--shadow);
+  transition: transform 0.14s, box-shadow 0.14s;
+}
+.btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--accent);
+}
+.btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.8rem;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid var(--border-mid);
+  box-shadow: 4px 4px 0 transparent;
+  transition: color 0.2s, border-color 0.2s, transform 0.14s, box-shadow 0.14s;
+}
+.btn-secondary:hover {
+  color: var(--text);
+  border-color: var(--accent-lt);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+/* Right-side floating status card */
+.hero-status {
+  position: absolute;
+  right: 5%;
+  bottom: 12%;
+  z-index: 2;
+  border: 2px solid var(--border-mid);
+  background: var(--bg-card);
+  padding: 1.1rem 1.5rem;
+  box-shadow: 4px 4px 0 var(--shadow);
+  max-width: 220px;
+}
+.hero-status-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--accent-lt);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.hero-status-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── TECH TICKER ────────────────────────────────────────── */
+.ticker {
+  border-top: 1px solid var(--border-mid);
+  border-bottom: 1px solid var(--border-mid);
+  padding: 0.85rem 0;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-run 32s linear infinite;
+}
+.ticker-item {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.ticker-dot {
+  width: 4px; height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+@keyframes ticker-run {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── SHARED SECTION ─────────────────────────────────────── */
+.section { padding: 5.5rem 2.5rem; }
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--accent-lt);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  max-width: 40px;
+  height: 1px;
+  background: var(--accent);
+}
+.section-title {
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: var(--text);
+  margin-bottom: 3rem;
+}
+
+/* ─── EXPERTISE GRID ─────────────────────────────────────── */
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 2px solid var(--border-mid);
+  box-shadow: 6px 6px 0 var(--shadow);
+}
+.expertise-cell {
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--border);
+  transition: background 0.2s;
+  position: relative;
+}
+.expertise-cell:hover { background: var(--bg-surface); }
+.expertise-cell::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+.expertise-icon {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  display: block;
+  line-height: 1;
+}
+.expertise-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.expertise-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: 0.18rem 0.55rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* ─── PHILOSOPHY ─────────────────────────────────────────── */
+.philosophy {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-mid);
+  border-bottom: 1px solid var(--border-mid);
+}
+.philosophy-inner {
+  display: grid;
+  grid-template-columns: 260px 1fr 2fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.philosophy-photo-wrap {
+  position: sticky;
+  top: 6rem;
+}
+
+.philosophy-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top;
+  border: 2px solid var(--border-mid);
+  box-shadow: 5px 5px 0 var(--shadow);
+  display: block;
+}
+.philosophy-quote {
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  border-left: 3px solid var(--accent);
+  padding-left: 1.5rem;
+}
+.philosophy-quote em {
+  font-style: normal;
+  color: var(--accent-lt);
+}
+.philosophy-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.philosophy-body p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.9;
+}
+.philosophy-body strong { color: var(--text); font-weight: 500; }
+.philosophy-stat-row {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.philosophy-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+.philosophy-stat-num {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.philosophy-stat-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ─── PROJECT CARDS ──────────────────────────────────────── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.project-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-mid);
+  padding: 1.75rem;
+  box-shadow: 4px 4px 0 var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--accent);
+  border-color: var(--accent);
+}
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+.project-type {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--accent-lt);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.project-arrow {
+  color: var(--text-dim);
+  font-size: 1rem;
+  transition: color 0.2s, transform 0.2s;
+}
+.project-card:hover .project-arrow {
+  color: var(--accent-lt);
+  transform: translate(2px, -2px);
+}
+.project-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+.project-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+.project-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+/* Highlight card (first/featured) */
+.project-card.featured {
+  background: var(--bg-surface);
+  border-color: var(--accent);
+  box-shadow: 5px 5px 0 var(--accent);
+}
+.project-card.featured:hover {
+  box-shadow: 8px 8px 0 var(--accent-lt);
+  border-color: var(--accent-lt);
+}
+
+/* ─── CONTACT ────────────────────────────────────────────── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.contact-intro {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  margin-bottom: 2rem;
+}
+.contact-links { display: flex; flex-direction: column; gap: 0.9rem; }
+.contact-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.4rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border-mid);
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: 3px 3px 0 var(--shadow);
+  transition: transform 0.14s, box-shadow 0.14s, border-color 0.14s;
+}
+.contact-link:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--accent);
+  border-color: var(--accent);
+}
+.contact-link-info { display: flex; flex-direction: column; gap: 0.2rem; }
+.contact-link-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.contact-link-value {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.contact-link-arrow {
+  color: var(--accent-lt);
+  font-size: 1.1rem;
+  transition: transform 0.15s;
+}
+.contact-link:hover .contact-link-arrow { transform: translateX(3px); }
+/* Contact — right column block */
+.contact-highlight {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-mid);
+  box-shadow: 6px 6px 0 var(--shadow);
+  padding: 2rem;
+  height: 100%;
+}
+.contact-highlight-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--accent-lt);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.contact-highlight-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+}
+.contact-detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.contact-detail {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.contact-detail::before {
+  content: '//';
+  color: var(--accent);
+}
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer {
+  padding: 1.75rem 2.5rem;
+  border-top: 2px solid var(--border-mid);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-surface);
+}
+.footer-logo {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent-lt); }
+
+/* ─── SCROLL REVEAL ──────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+  .projects-grid  { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .section { padding: 4rem 1.25rem; }
+  .hero { padding: 7rem 1.25rem 4rem; }
+  .hero-status { display: none; }
+  .expertise-grid { grid-template-columns: 1fr; }
+  .projects-grid  { grid-template-columns: 1fr; }
+  .philosophy-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .contact-grid   { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  .footer-links { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  .reveal { opacity: 1; transform: none; }
+  .btn-primary, .btn-secondary, .project-card, .contact-link { transition: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══ NAVIGATION ══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-logo">// dev.portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#expertise">Expertise</a></li>    
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#works">Works</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Mahasiswa Teknik — Software, Systems &amp; Electronics</div>
+    <h1 class="hero-headline">
+      Engineer.<br>
+      <span class="word-outline">Creator.</span><br>
+      Designer.
+    </h1>
+    <p class="hero-desc">
+      Tidak berhenti di hasil akhir — selalu menggali
+      <strong>"mengapa"</strong> sebuah sistem dapat bekerja.
+      Membangun dari logika terdalam, cross-disciplinary: dari Java
+      hingga arsitektur terdistribusi, dari elektronika hingga riset ilmiah.
+    </p>
+    <div class="hero-actions">
+      <a href="#works" class="btn-primary">Lihat Proyek ↓</a>
+      <a href="#contact" class="btn-secondary">Terhubung →</a>
+    </div>
+  </div>
+
+  <div class="hero-status">
+    <div class="hero-status-label">// Currently Active</div>
+    <div class="hero-status-text">
+      Merancang &amp; membangun sistem dengan struktur yang rapi dan dokumentasi yang sistematis.
+    </div>
+  </div>
+</section>
+
+<!-- ══ TECH TICKER ═════════════════════════════════════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Java Classic<span class="ticker-dot"></span></span>
+    <span class="ticker-item">PHP / CodeIgniter 4<span class="ticker-dot"></span></span>
+    <span class="ticker-item">System Architecture<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Load Balancing<span class="ticker-dot"></span></span>
+    <span class="ticker-item">WebSocket / Node.js<span class="ticker-dot"></span></span>
+    <span class="ticker-item">OpenCV / Computer Vision<span class="ticker-dot"></span></span>
+    <span class="ticker-item">ERD &amp; Normalisasi 3NF<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Elektronika &amp; Energi<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Git CLI<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Data Flow Diagram<span class="ticker-dot"></span></span>
+    <span class="ticker-item">FFT / Signal Processing<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Virtual Machine Topology<span class="ticker-dot"></span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">Java Classic<span class="ticker-dot"></span></span>
+    <span class="ticker-item">PHP / CodeIgniter 4<span class="ticker-dot"></span></span>
+    <span class="ticker-item">System Architecture<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Load Balancing<span class="ticker-dot"></span></span>
+    <span class="ticker-item">WebSocket / Node.js<span class="ticker-dot"></span></span>
+    <span class="ticker-item">OpenCV / Computer Vision<span class="ticker-dot"></span></span>
+    <span class="ticker-item">ERD &amp; Normalisasi 3NF<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Elektronika &amp; Energi<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Git CLI<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Data Flow Diagram<span class="ticker-dot"></span></span>
+    <span class="ticker-item">FFT / Signal Processing<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Virtual Machine Topology<span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- ══ EXPERTISE ═══════════════════════════════════════════ -->
+<section class="section" id="expertise">
+  <div class="reveal">
+    <p class="section-label">Keahlian</p>
+    <h2 class="section-title">Domain &amp; Teknologi</h2>
+  </div>
+  <div class="expertise-grid reveal">
+
+    <div class="expertise-cell" data-num="01">
+      <div class="expertise-name">Mobile Development</div>
+      <div class="expertise-desc">Pengembangan aplikasi Android dari bawah ke atas menggunakan Java klasik — tanpa Kotlin atau Jetpack Compose — untuk kontrol penuh atas performa dan logika offline.</div>
+      <div class="tags">
+        <span class="tag">Java Classic</span>
+        <span class="tag">Android SDK</span>
+        <span class="tag">Offline-First</span>
+      </div>
+    </div>
+
+    <div class="expertise-cell" data-num="02">
+      <div class="expertise-name">Web Development</div>
+      <div class="expertise-desc">Membangun sistem web berbasis PHP dan CodeIgniter 4 dengan routing efisien, CRUD terstruktur, sistem autentikasi aman, dan integrasi Git aktif via command line.</div>
+      <div class="tags">
+        <span class="tag">PHP</span>
+        <span class="tag">CodeIgniter 4</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">Git CLI</span>
+      </div>
+    </div>
+
+    <div class="expertise-cell" data-num="03">
+      <div class="expertise-name">System Architecture</div>
+      <div class="expertise-desc">Perancangan sistem informasi skala besar secara formal: DFD Level 0&amp;1, ERD, Normalisasi hingga 3NF, Kamus Data, HIPO, hingga Activity Diagram.</div>
+      <div class="tags">
+        <span class="tag">DFD</span>
+        <span class="tag">ERD</span>
+        <span class="tag">Normalisasi 3NF</span>
+        <span class="tag">HIPO</span>
+      </div>
+    </div>
+
+    <div class="expertise-cell" data-num="04">
+      <div class="expertise-name">Network &amp; Infrastructure</div>
+      <div class="expertise-desc">Merancang dan troubleshooting topologi jaringan terdistribusi: konfigurasi 4 VM (Load Balancer, Web Server 1 &amp; 2, Database), TCP/UDP, dan sistem failover.</div>
+      <div class="tags">
+        <span class="tag">Load Balancing</span>
+        <span class="tag">VM Topology</span>
+        <span class="tag">TCP/UDP</span>
+        <span class="tag">Failover</span>
+      </div>
+    </div>
+
+    <div class="expertise-cell" data-num="05">
+      <div class="expertise-name">Scientific Research</div>
+      <div class="expertise-desc">Menyusun artikel ilmiah terstruktur, eksperimen performa komparatif, dan segmentasi pengguna berbasis analisis sentimen platform pesan instan.</div>
+      <div class="tags">
+        <span class="tag">WebSocket</span>
+        <span class="tag">HTTP Polling</span>
+        <span class="tag">Sentiment Analysis</span>
+      </div>
+    </div>
+
+    <div class="expertise-cell" data-num="06">
+      <div class="expertise-name">Computer Vision</div>
+      <div class="expertise-desc">Implementasi pengolahan citra menggunakan OpenCV: template matching, penerapan FFT untuk deteksi objek berbasis frekuensi, dan pipeline akuisisi gambar end-to-end.</div>
+      <div class="tags">
+        <span class="tag">OpenCV</span>
+        <span class="tag">FFT</span>
+        <span class="tag">Template Matching</span>
+        <span class="tag">Python</span>
+      </div>
+    </div>
+
+    <div class="expertise-cell" data-num="07">
+      <div class="expertise-name">Electronics &amp; Engineering</div>
+      <div class="expertise-desc">Analisis mendalam rangkaian RLC, dioda, dan energi terbarukan, dikuatkan dengan pemahaman statistik: uji hipotesis (Uji Z &amp; t), P-value, dan pengambilan keputusan berbasis data.</div>
+      <div class="tags">
+        <span class="tag">Rangkaian RLC</span>
+        <span class="tag">Dioda</span>
+        <span class="tag">Uji Hipotesis</span>
+        <span class="tag">Energi Terbarukan</span>
+      </div>
+    </div>
+
+    <div class="expertise-cell" data-num="08">
+      <div class="expertise-name">Technical Communication</div>
+      <div class="expertise-desc">Mengkomunikasikan sistem kompleks (load balancing, arsitektur terdistribusi) menjadi presentasi visual yang rapi dan mudah dipahami oleh berbagai audiens.</div>
+      <div class="tags">
+        <span class="tag">Canva</span>
+        <span class="tag">AI Visual Tools</span>
+        <span class="tag">Presentasi Teknis</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section philosophy" id="approach">
+  <div class="philosophy-inner reveal">
+
+    <div class="philosophy-photo-wrap">
+      <img src="/assets/dattt.jpg" alt="Muhamad Ghilbram Zyaulaq" class="philosophy-photo">
+    </div>
+
+    <div>
+      <p class="section-label">Pendekatan</p>
+      <blockquote class="philosophy-quote">
+        Selalu bertanya <em>"mengapa"</em>, bukan hanya <em>"bagaimana"</em>.
+      </blockquote>
+    </div>
+
+    <div class="philosophy-body">
+      <p>Pendekatan belajar yang digunakan tidak berhenti di hasil akhir. Setiap sistem, rangkaian, atau baris kode dibedah sampai ke lapisan terdalam — memahami <strong>mekanisme yang membuatnya bekerja</strong>, bukan sekadar menggunakannya.</p>
+      <p>Latar belakang yang membentang dari ilmu komputer, jaringan, pengembangan web, hingga teknik energi terbarukan, menciptakan pola pikir seorang <strong>engineer sejati</strong>: sistematis, cross-disciplinary, dan selalu mencari struktur paling rapi di balik kompleksitas.</p>
+      <p>Ada ketertarikan kuat pada dokumentasi yang sistematis, kode yang <strong>clean</strong>, dan bagaimana teknologi dapat secara langsung membantu serta memvalidasi sisi emosional manusia — bukan hanya menyelesaikan masalah teknis.</p>
+      <div class="philosophy-stat-row">
+        <div class="philosophy-stat">
+          <span class="philosophy-stat-num">6+</span>
+          <span class="philosophy-stat-label">Proyek Aktif</span>
+        </div>
+        <div class="philosophy-stat">
+          <span class="philosophy-stat-num">4</span>
+          <span class="philosophy-stat-label">Domain Disiplin</span>
+        </div>
+        <div class="philosophy-stat">
+          <span class="philosophy-stat-num">∞</span>
+          <span class="philosophy-stat-label">Rasa Ingin Tahu</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ══ FEATURED WORKS ═══════════════════════════════════════ -->
+<section class="section" id="works">
+  <div class="reveal">
+    <p class="section-label">Karya Pilihan</p>
+    <h2 class="section-title">Proyek &amp; Riset</h2>
+  </div>
+  <div class="projects-grid">
+
+    <!-- Card 1: Serenity (featured) -->
+    <div class="project-card featured reveal">
+      <div class="project-header">
+        <span class="project-type">Mobile Application</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Project Serenity</div>
+      <div class="project-desc">
+        Aplikasi dukungan emosional yang dibangun murni dengan Java klasik, berjalan 100% offline tanpa API eksternal. Alur sistem cerdas: <em>Input → Interpretasi Emosi → Deteksi Kategori → Generator Validasi → Suggestion Card Dinamis</em>. Setiap saran dirancang kontekstual, manusiawi, dan tidak generik — dilengkapi mood tracker harian berbasis emoji dan riwayat interaktif.
+      </div>
+      <div class="project-footer">
+        <span class="tag">Java Classic</span>
+        <span class="tag">Android SDK</span>
+        <span class="tag">Offline-First</span>
+        <span class="tag">Mood Tracking</span>
+        <span class="tag">NLP Lokal</span>
+      </div>
+    </div>
+
+    <!-- Card 2: WebSocket Research -->
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-type">Scientific Research</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">WebSocket vs HTTP Polling</div>
+      <div class="project-desc">
+        Artikel ilmiah komparatif yang mengukur performa dua paradigma komunikasi real-time: HTTP Polling (PHP + MySQL) versus WebSocket (Node.js + Socket.IO). Mencakup desain eksperimen, pengukuran latensi end-to-end, dan analisis kondisi optimal untuk masing-masing metode dalam skenario chat sistem.
+      </div>
+      <div class="project-footer">
+        <span class="tag">Node.js</span>
+        <span class="tag">Socket.IO</span>
+        <span class="tag">PHP</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">Riset Ilmiah</span>
+      </div>
+    </div>
+
+    <!-- Card 3: Sistem Pesan Keluar -->
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-type">System Design</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Sistem Informasi Pesan Keluar</div>
+      <div class="project-desc">
+        Perancangan sistem informasi skala besar yang didokumentasikan secara menyeluruh: Data Flow Diagram Level 0 &amp; 1, ERD, Normalisasi 1NF→3NF, Kamus Data, HIPO, Activity Diagram, dan UI. Arsitektur mencakup validasi pesan dari entitas eksternal hingga penyimpanan basis data terstruktur.
+      </div>
+      <div class="project-footer">
+        <span class="tag">DFD L0 / L1</span>
+        <span class="tag">ERD</span>
+        <span class="tag">Normalisasi 3NF</span>
+        <span class="tag">HIPO</span>
+        <span class="tag">Kamus Data</span>
+      </div>
+    </div>
+
+    <!-- Card 4: Distributed Infrastructure -->
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-type">Network Infrastructure</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Distributed Infrastructure Topology</div>
+      <div class="project-desc">
+        Perancangan topologi jaringan terdistribusi dengan 4 VM utama: Load Balancer, Web Server 1, Web Server 2, dan Database server. Mencakup troubleshooting antarmuka enp0s8, konfigurasi IP statis, protokol TCP/UDP, dan implementasi sistem failover untuk high availability.
+      </div>
+      <div class="project-footer">
+        <span class="tag">Load Balancer</span>
+        <span class="tag">4 VM Topology</span>
+        <span class="tag">TCP/UDP</span>
+        <span class="tag">Failover</span>
+        <span class="tag">VirtualBox</span>
+      </div>
+    </div>
+
+    <!-- Card 5: Wedding Organizer -->
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-type">Web Development</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Wedding Organizer Platform</div>
+      <div class="project-desc">
+        Website one-page Wedding Organizer berbasis PHP/CodeIgniter 4: dekorasi pelaminan, katalog catering, galeri model pengantin, rundown acara, fitur pemesanan paket, dan validasi kapasitas tamu. Login admin aman dengan <code style="font-family: var(--mono); font-size: 0.75rem; color: var(--gold);">password_hash()</code> dan Git terintegrasi via CLI.
+      </div>
+      <div class="project-footer">
+        <span class="tag">CodeIgniter 4</span>
+        <span class="tag">PHP</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">One-Page Layout</span>
+        <span class="tag">Admin Auth</span>
+      </div>
+    </div>
+
+    <!-- Card 6: Computer Vision -->
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-type">Computer Vision</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Computer Vision Experiments</div>
+      <div class="project-desc">
+        Serangkaian eksperimen pengolahan citra dengan OpenCV: template matching untuk deteksi pola visual, Fast Fourier Transform (FFT) untuk analisis frekuensi spasial dalam deteksi objek, serta troubleshooting pipeline akuisisi gambar end-to-end dari sensor hingga proses.
+      </div>
+      <div class="project-footer">
+        <span class="tag">OpenCV</span>
+        <span class="tag">FFT</span>
+        <span class="tag">Template Matching</span>
+        <span class="tag">Python</span>
+        <span class="tag">Image Processing</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CONTACT ═════════════════════════════════════════════ -->
+<section class="section" id="contact" style="background: var(--bg-surface); border-top: 1px solid var(--border-mid);">
+  <div class="reveal">
+    <p class="section-label">Terhubung</p>
+    <h2 class="section-title">Mulai Percakapan</h2>
+  </div>
+  <div class="contact-grid reveal">
+    <div>
+      <p class="contact-intro">
+        Terbuka untuk kolaborasi proyek, diskusi teknis, riset bersama, atau sekadar bertukar perspektif tentang sistem dan teknologi.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:your@email.com" class="contact-link">
+          <div class="contact-link-info">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">your@email.com</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://github.com/username" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-info">
+            <span class="contact-link-label">GitHub</span>
+            <span class="contact-link-value">github.com/username</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://linkedin.com/in/username" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-info">
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">linkedin.com/in/username</span>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-highlight">
+      <div class="contact-highlight-label">// Status &amp; Ketersediaan</div>
+      <div class="contact-highlight-text">
+        Saat ini aktif membangun proyek teknis dan terbuka untuk diskusi kolaborasi yang bermakna.
+      </div>
+      <div class="contact-detail-row">
+        <span class="contact-detail">Mahasiswa Teknik aktif</span>
+        <span class="contact-detail">Based in Indonesia</span>
+        <span class="contact-detail">Cross-disciplinary: Software × Hardware × Research</span>
+        <span class="contact-detail">Fokus pada sistem yang clean &amp; terdokumentasi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">// Engineer. Creator. Designer.</div>
+  <div class="footer-links">
+    <a href="#expertise">Expertise</a>
+    <a href="#works">Works</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">Built with structure &amp; intention — 2025</div>
+</footer>
+
+<!-- ══ SCRIPTS ═════════════════════════════════════════════ -->
+<script>
+  // ── Scroll Reveal ──────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+
+  revealEls.forEach(el => revealObs.observe(el));
+
+  // ── Stagger project cards ──────────────────────────────
+  document.querySelectorAll('.project-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 0.07}s`;
+  });
+
+  // ── Stagger expertise cells ────────────────────────────
+  document.querySelectorAll('.expertise-cell').forEach((cell, i) => {
+    cell.style.transitionDelay = `${i * 0.04}s`;
+  });
+
+  // ── Smooth active nav link highlight ──────────────────
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+
+  const sectionObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === `#${id}`
+            ? 'var(--text)'
+            : '';
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => sectionObs.observe(s));
+</script>
+
+</body>
+</html>
