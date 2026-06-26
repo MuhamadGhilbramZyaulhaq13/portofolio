@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Mind Map Portfolio</title>
+  
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  
+  <style>
+    body {
+      background-color: #0d1117; 
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+    
+    #mindmap-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .links line {
+      stroke: #30363d; 
+      stroke-opacity: 0.8;
+      stroke-width: 1.5px;
+    }
+
+    .nodes g {
+      cursor: grab;
+    }
+    .nodes g:active {
+      cursor: grabbing;
+    }
+
+    .node-text {
+      fill: #8b949e;
+      font-size: 12px;
+      pointer-events: none;
+      text-anchor: middle;
+    }
+
+    .category-text {
+      fill: #c9d1d9; 
+      font-size: 14px;
+      font-weight: 600;
+      pointer-events: none;
+      text-anchor: middle;
+    }
+
+    .center-text {
+      fill: #ffffff; 
+      font-weight: bold;
+      font-size: 18px;
+      letter-spacing: 1px;
+      pointer-events: none;
+      text-anchor: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="mindmap-container"></div>
+
+  <script>
+    // 1. DATA IKON KUSTOM (Ditambah untuk Kategori Baru & Perbaikan AWS)
+    const iconEngineer = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E"; 
+    const iconFrontend = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M4 6h16v12H4zm2 2v8h12V8zM3 4h18a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm6 3h2v10H9zm5 0h2v10h-2z'/%3E%3C/svg%3E"; 
+    const iconBackend  = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M12 2C6.48 2 2 4.02 2 6.5v11C2 19.98 6.48 22 12 22s10-2.02 10-4.5v-11C22 4.02 17.52 2 12 2zm0 2.5c4.7 0 8.09 1.42 8.09 2S16.7 8.5 12 8.5 3.91 7.08 3.91 6.5 7.3 4.5 12 4.5zm0 13c-4.7 0-8.09-1.42-8.09-2v-1.63c1.78 1.25 4.71 2.13 8.09 2.13s6.31-.88 8.09-2.13v1.63c0 .58-3.39 2-8.09 2zm0-5c-4.7 0-8.09-1.42-8.09-2v-1.63c1.78 1.25 4.71 2.13 8.09 2.13s6.31-.88 8.09-2.13v1.63c0 .58-3.39 2-8.09 2z'/%3E%3C/svg%3E"; 
+    const iconDevOps   = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z'/%3E%3C/svg%3E"; 
+    
+    // Ikon untuk kategori tambahan
+    const iconMobile   = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z'/%3E%3C/svg%3E"; // Smartphone
+    const iconNetwork  = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z'/%3E%3C/svg%3E"; // Nodes/Network
+    const iconDesign   = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z'/%3E%3C/svg%3E"; // Diagram
+    
+    // Perbaikan AWS (menggunakan Custom SVG agar tidak error)
+    const fixAWS = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M16.5 15.5c-1.7 1-4.2 1.5-6.5 1.5-3.6 0-6.8-1.1-9.3-3-.2-.1-.2-.4 0-.5.4-.3.9-.5 1.3-.7.1 0 .3 0 .4.1 2.2 1.6 5 2.6 8 2.6 2 0 3.9-.3 5.6-1 .3-.1.5 0 .7.3.3.4.6.8.9 1.2.1.2 0 .4-.2.5H16.5z'/%3E%3C/svg%3E";
+
+    // 2. DATA (Node dan Relasi)
+    const data = {
+      nodes: [
+        { id: "Engineer", group: 1, radius: 30, icon: iconEngineer },
+        
+        // 6 Kategori Utama
+        { id: "Frontend", group: 2, radius: 20, icon: iconFrontend },
+        { id: "Backend", group: 2, radius: 20, icon: iconBackend },
+        { id: "DevOps", group: 2, radius: 20, icon: iconDevOps },
+        { id: "Mobile Dev", group: 2, radius: 20, icon: iconMobile },
+        { id: "Networking", group: 2, radius: 20, icon: iconNetwork },
+        { id: "System Design", group: 2, radius: 20, icon: iconDesign },
+        
+        // --- DAFTAR SKILLS BERDASARKAN KATEGORI ---
+        
+        // Frontend Skills
+        { id: "React", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/react/white" },
+        { id: "Next.js", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/nextdotjs/white" },
+        { id: "Tailwind", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/tailwindcss/white" },
+        
+        // Backend Skills
+        { id: "Node.js", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/nodedotjs/white" },
+        { id: "Python", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/python/white" },
+        { id: "PostgreSQL", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/postgresql/white" },
+        
+        // DevOps Skills
+        { id: "Docker", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/docker/white" },
+        { id: "Git", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/git/white" },
+        { id: "AWS", group: 3, radius: 14, icon: fixAWS }, // Menggunakan ikon perbaikan
+        
+        // Mobile Dev Skills
+        { id: "Java", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/openjdk/white" },
+        { id: "Android Studio", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/androidstudio/white" },
+        { id: "Firebase", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/firebase/white" },
+
+        // Networking & Systems
+        { id: "Linux", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/linux/white" },
+        { id: "Nginx", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/nginx/white" },
+        { id: "VMs", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/virtualbox/white" },
+
+        // System Design
+        { id: "Figma", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/figma/white" },
+        { id: "Canva", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/canva/white" },
+        { id: "Diagrams", group: 3, radius: 14, icon: "https://cdn.simpleicons.org/diagramsdotnet/white" }
+      ],
+      links: [
+        // Hubungkan Pusat ke Semua Kategori
+        { source: "Engineer", target: "Frontend" },
+        { source: "Engineer", target: "Backend" },
+        { source: "Engineer", target: "DevOps" },
+        { source: "Engineer", target: "Mobile Dev" },
+        { source: "Engineer", target: "Networking" },
+        { source: "Engineer", target: "System Design" },
+        
+        // Relasi Frontend
+        { source: "Frontend", target: "React" },
+        { source: "Frontend", target: "Next.js" },
+        { source: "Frontend", target: "Tailwind" },
+        
+        // Relasi Backend
+        { source: "Backend", target: "Node.js" },
+        { source: "Backend", target: "Python" },
+        { source: "Backend", target: "PostgreSQL" },
+        
+        // Relasi DevOps
+        { source: "DevOps", target: "Docker" },
+        { source: "DevOps", target: "Git" },
+        { source: "DevOps", target: "AWS" },
+        
+        // Relasi Mobile Dev
+        { source: "Mobile Dev", target: "Java" },
+        { source: "Mobile Dev", target: "Android Studio" },
+        { source: "Mobile Dev", target: "Firebase" },
+
+        // Relasi Networking
+        { source: "Networking", target: "Linux" },
+        { source: "Networking", target: "Nginx" },
+        { source: "Networking", target: "VMs" },
+
+        // Relasi System Design
+        { source: "System Design", target: "Figma" },
+        { source: "System Design", target: "Canva" },
+        { source: "System Design", target: "Diagrams" }
+      ]
+    };
+
+    const container = document.getElementById('mindmap-container');
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    const svg = d3.select("#mindmap-container").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    // 3. SETTING FISIKA (Diperluas karena node semakin banyak)
+    const simulation = d3.forceSimulation(data.nodes)
+      .force("link", d3.forceLink(data.links).id(d => d.id).distance(90)) 
+      .force("charge", d3.forceManyBody().strength(-350)) // Gaya tolak-menolak
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collide", d3.forceCollide().radius(d => d.radius + 15)); // Mencegah ikon bertabrakan
+
+    // 4. MENGGAMBAR GARIS
+    const link = svg.append("g")
+      .attr("class", "links")
+      .selectAll("line")
+      .data(data.links)
+      .enter().append("line");
+
+    // 5. MEMBUAT GRUP NODE
+    const nodeGroup = svg.append("g")
+      .attr("class", "nodes")
+      .selectAll("g")
+      .data(data.nodes)
+      .enter().append("g")
+      .call(d3.drag() 
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+
+    // MERENDER IKON
+    nodeGroup.append("image")
+      .attr("href", d => d.icon)
+      .attr("width", d => d.radius * 2)
+      .attr("height", d => d.radius * 2)
+      .attr("x", d => -d.radius) 
+      .attr("y", d => -d.radius);
+
+    // MERENDER TEKS
+    nodeGroup.append("text")
+      .text(d => d.id)
+      .attr("class", d => {
+        if (d.group === 1) return "center-text";
+        if (d.group === 2) return "category-text";
+        return "node-text"; 
+      })
+      .attr("dy", d => d.radius + 18);
+
+    // 6. ANIMASI SIMULASI FISIKA
+    simulation.on("tick", () => {
+      nodeGroup.attr("transform", d => {
+          d.x = Math.max(d.radius, Math.min(width - d.radius, d.x));
+          d.y = Math.max(d.radius, Math.min(height - d.radius, d.y));
+          return `translate(${d.x},${d.y})`;
+      });
+
+      link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+    });
+
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+  </script>
+</body>
+</html>
