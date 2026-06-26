@@ -221,6 +221,14 @@ nav {
   transform: translate(-2px, -2px);
   box-shadow: 4px 4px 0 var(--shadow);
 }
+.hero-canvas-wrapper {
+  position: absolute;
+  right: 6%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 420px;
+}
 .hero-canvas-wrapper canvas {
   width: 100% !important;
   height: auto !important;
@@ -228,14 +236,15 @@ nav {
 }
 .hero-status {
   position: absolute;
-  right: 5%;
-  bottom: 12%;
+  left: 2.5%;
+  bottom: 8%;
   z-index: 2;
   border: 2px solid var(--border-mid);
   background: var(--bg-card);
   padding: 1.1rem 1.5rem;
   box-shadow: 4px 4px 0 var(--shadow);
   max-width: 220px;
+  display: none;
 }
 .hero-status-label {
   font-family: var(--mono);
@@ -701,23 +710,19 @@ footer {
 <!-- ══ HERO ════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-eyebrow">Mahasiswa Teknik — Software, Systems &amp; Electronics</div>
+    <div class="hero-eyebrow">Muhamad Ghilbram Zyaulhaq — Teknik Informatika, Universitas Pelita Bangsa</div>
     <h1 class="hero-headline">
       Engineer.<br>
       <span class="word-outline">Creator.</span><br>
       Designer.
     </h1>
     <p class="hero-desc">
-      Tidak berhenti di hasil akhir — selalu menggali
+      Seorang mahasiswa Teknik yang tidak berhenti di hasil akhir — selalu menggali
       <strong>"mengapa"</strong> sebuah sistem dapat bekerja.
       Membangun dari logika terdalam, cross-disciplinary: dari Java
       hingga arsitektur terdistribusi, dari elektronika hingga riset ilmiah.
     </p>
-    <div class="hero-canvas-wrapper">
-    <canvas id="myCanvas" width="450" height="450">
-      <p>Browser Anda tidak mendukung canvas.</p>
-    </canvas>
-  </div>
+
   <div id="tags" style="display: none;">
     <ul>
       <li><a href="#"><img src="https://cdn.simpleicons.org/html5/white" width="40" height="40" alt="HTML5"></a></li>
@@ -744,7 +749,16 @@ footer {
       <a href="#contact" class="btn-secondary">Terhubung →</a>
     </div>
   </div>
-  
+  <div class="hero-canvas-wrapper">
+    <canvas id="myCanvas" width="450" height="450">
+      <p>Browser Anda tidak mendukung canvas.</p>
+    </canvas>
+  </div>
+  <div id="tags" style="display: none;">
+    ...isi tags...
+  </div>
+
+  <div class="hero-status">
 
   <div class="hero-status">
     <div class="hero-status-label">// Currently Active</div>
@@ -889,7 +903,7 @@ footer {
     </div>
 
     <div>
-      <p class="section-label">Pendekatan</p>
+      <p class="section-label">Approach</p>
       <blockquote class="philosophy-quote">
         Selalu bertanya <em>"mengapa"</em>, bukan hanya <em>"bagaimana"</em>.
       </blockquote>
@@ -1054,24 +1068,24 @@ footer {
         Terbuka untuk kolaborasi proyek, diskusi teknis, riset bersama, atau sekadar bertukar perspektif tentang sistem dan teknologi.
       </p>
       <div class="contact-links">
-        <a href="mailto:your@email.com" class="contact-link">
+        <a href="mailto:muhamadghilbramzyaulhaq@email.com" class="contact-link">
           <div class="contact-link-info">
             <span class="contact-link-label">Email</span>
-            <span class="contact-link-value">your@email.com</span>
+            <span class="contact-link-value">muhamadghilbramzyaulhaq@email.com</span>
           </div>
           <span class="contact-link-arrow">→</span>
         </a>
-        <a href="https://github.com/username" target="_blank" rel="noopener" class="contact-link">
+        <a href="https://github.com/MuhamadGhilbramZyaulhaq13" target="_blank" rel="noopener" class="contact-link">
           <div class="contact-link-info">
             <span class="contact-link-label">GitHub</span>
-            <span class="contact-link-value">github.com/username</span>
+            <span class="contact-link-value">github.com/MuhamadGhilbramZyaulhaq13</span>
           </div>
           <span class="contact-link-arrow">→</span>
         </a>
-        <a href="https://linkedin.com/in/username" target="_blank" rel="noopener" class="contact-link">
+        <a href="https://www.linkedin.com/in/muhamadghilbramzyaulhaq" target="_blank" rel="noopener" class="contact-link">
           <div class="contact-link-info">
             <span class="contact-link-label">LinkedIn</span>
-            <span class="contact-link-value">linkedin.com/in/username</span>
+            <span class="contact-link-value">linkedin.com/in/muhamadghilbramzyaulhaq</span>
           </div>
           <span class="contact-link-arrow">→</span>
         </a>
@@ -1083,7 +1097,9 @@ footer {
         Saat ini aktif membangun proyek teknis dan terbuka untuk diskusi kolaborasi yang bermakna.
       </div>
       <div class="contact-detail-row">
-        <span class="contact-detail">Mahasiswa Teknik aktif</span>
+        <span class="contact-detail">Muhamad Ghilbram Zyaulhaq</span>
+        <span class="contact-detail">Teknik Informatika — Universitas Pelita Bangsa</span>
+        <span class="contact-detail">Fakultas Teknik</span>
         <span class="contact-detail">Based in Indonesia</span>
         <span class="contact-detail">Cross-disciplinary: Software × Hardware × Research</span>
         <span class="contact-detail">Fokus pada sistem yang clean &amp; terdokumentasi</span>
