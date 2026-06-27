@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <style>
 
 :root {
@@ -621,6 +622,44 @@ nav {
   content: '//';
   color: var(--accent);
 }
+/* ─── MINDMAP ────────────────────────────────────────────── */
+#mindmap-contact {
+  width: 100%;
+  height: 520px;
+  margin-top: -10rem;
+  overflow: hidden;
+}
+#mindmap-contact .mm-links line {
+  stroke: var(--border-mid);
+  stroke-opacity: 0.8;
+  stroke-width: 1.5px;
+}
+#mindmap-contact .mm-nodes g { cursor: grab; }
+#mindmap-contact .mm-nodes g:active { cursor: grabbing; }
+#mindmap-contact .mm-node-text {
+  fill: var(--text-muted);
+  font-size: 9px;
+  pointer-events: none;
+  text-anchor: middle;
+  font-family: var(--mono);
+}
+#mindmap-contact .mm-category-text {
+  fill: var(--text);
+  font-size: 10px;
+  font-weight: 600;
+  pointer-events: none;
+  text-anchor: middle;
+  font-family: var(--font);
+}
+#mindmap-contact .mm-center-text {
+  fill: var(--gold);
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 1px;
+  pointer-events: none;
+  text-anchor: middle;
+  font-family: var(--font);
+}
 
 /* ─── FOOTER ─────────────────────────────────────────────── */
 footer {
@@ -1092,21 +1131,7 @@ footer {
         </a>
       </div>
     </div>
-    <div class="contact-highlight">
-      <div class="contact-highlight-label">// Status &amp; Ketersediaan</div>
-      <div class="contact-highlight-text">
-        Saat ini aktif membangun proyek teknis dan terbuka untuk diskusi kolaborasi yang bermakna.
-      </div>
-      <div class="contact-detail-row">
-        <span class="contact-detail">Muhamad Ghilbram Zyaulhaq</span>
-        <span class="contact-detail">Teknik Informatika — Universitas Pelita Bangsa</span>
-        <span class="contact-detail">Fakultas Teknik</span>
-        <span class="contact-detail">Based in Indonesia</span>
-        <span class="contact-detail">Cross-disciplinary: Software × Hardware × Research</span>
-        <span class="contact-detail">Fokus pada sistem yang clean &amp; terdokumentasi</span>
-      </div>
-    </div>
-  </div>
+    <div id="mindmap-contact"></div>
 </section>
 
 <!-- ══ FOOTER ══════════════════════════════════════════════ -->
@@ -1163,6 +1188,137 @@ footer {
   }, { rootMargin: '-40% 0px -55% 0px' });
 
   sections.forEach(s => sectionObs.observe(s));
+  // ── Mind Map Contact ───────────────────────────────────────
+(function() {
+  const mmContainer = document.getElementById('mindmap-contact');
+  if (!mmContainer || typeof d3 === 'undefined') return;
+
+  const mmW = mmContainer.clientWidth;
+  const mmH = mmContainer.clientHeight;
+
+  const iconEngineer = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23A89060'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+  const iconFrontend = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M4 6h16v12H4zm2 2v8h12V8zM3 4h18a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm6 3h2v10H9zm5 0h2v10h-2z'/%3E%3C/svg%3E";
+  const iconBackend  = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M12 2C6.48 2 2 4.02 2 6.5v11C2 19.98 6.48 22 12 22s10-2.02 10-4.5v-11C22 4.02 17.52 2 12 2zm0 2.5c4.7 0 8.09 1.42 8.09 2S16.7 8.5 12 8.5 3.91 7.08 3.91 6.5 7.3 4.5 12 4.5zm0 13c-4.7 0-8.09-1.42-8.09-2v-1.63c1.78 1.25 4.71 2.13 8.09 2.13s6.31-.88 8.09-2.13v1.63c0 .58-3.39 2-8.09 2zm0-5c-4.7 0-8.09-1.42-8.09-2v-1.63c1.78 1.25 4.71 2.13 8.09 2.13s6.31-.88 8.09-2.13v1.63c0 .58-3.39 2-8.09 2z'/%3E%3C/svg%3E";
+  const iconDevOps   = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z'/%3E%3C/svg%3E";
+  const iconMobile   = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z'/%3E%3C/svg%3E";
+  const iconNetwork  = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z'/%3E%3C/svg%3E";
+  const iconDesign   = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9d1d9'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z'/%3E%3C/svg%3E";
+  const fixAWS       = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M16.5 15.5c-1.7 1-4.2 1.5-6.5 1.5-3.6 0-6.8-1.1-9.3-3-.2-.1-.2-.4 0-.5.4-.3.9-.5 1.3-.7.1 0 .3 0 .4.1 2.2 1.6 5 2.6 8 2.6 2 0 3.9-.3 5.6-1 .3-.1.5 0 .7.3.3.4.6.8.9 1.2.1.2 0 .4-.2.5H16.5z'/%3E%3C/svg%3E";
+
+  const mmData = {
+    nodes: [
+      { id: "Engineer",     group: 1, radius: 22, icon: iconEngineer },
+      { id: "Frontend",     group: 2, radius: 16, icon: iconFrontend },
+      { id: "Backend",      group: 2, radius: 16, icon: iconBackend  },
+      { id: "DevOps",       group: 2, radius: 16, icon: iconDevOps   },
+      { id: "Mobile Dev",   group: 2, radius: 16, icon: iconMobile   },
+      { id: "Networking",   group: 2, radius: 16, icon: iconNetwork  },
+      { id: "System Design",group: 2, radius: 16, icon: iconDesign   },
+      { id: "React",        group: 3, radius: 11, icon: "https://cdn.simpleicons.org/react/white" },
+      { id: "Vue.js",       group: 3, radius: 11, icon: "https://cdn.simpleicons.org/vuedotjs/white" },
+      { id: "Next.js",      group: 3, radius: 11, icon: "https://cdn.simpleicons.org/nextdotjs/white" },
+      { id: "Angular",      group: 3, radius: 11, icon: "https://cdn.simpleicons.org/angular/white" },
+      { id: "Tailwind",     group: 3, radius: 11, icon: "https://cdn.simpleicons.org/tailwindcss/white" },
+      { id: "Node.js",      group: 3, radius: 11, icon: "https://cdn.simpleicons.org/nodedotjs/white" },
+      { id: "Python",       group: 3, radius: 11, icon: "https://cdn.simpleicons.org/python/white" },
+      { id: "PostgreSQL",   group: 3, radius: 11, icon: "https://cdn.simpleicons.org/postgresql/white" },
+      { id: "MongoDB",      group: 3, radius: 11, icon: "https://cdn.simpleicons.org/mongodb/white" },
+      { id: "Docker",       group: 3, radius: 11, icon: "https://cdn.simpleicons.org/docker/white" },
+      { id: "Git",          group: 3, radius: 11, icon: "https://cdn.simpleicons.org/git/white" },
+      { id: "Kubernetes",   group: 3, radius: 11, icon: "https://cdn.simpleicons.org/kubernetes/white" },
+      { id: "Jenkins",      group: 3, radius: 11, icon: "https://cdn.simpleicons.org/jenkins/white" },
+      { id: "AWS",          group: 3, radius: 11, icon: fixAWS },
+      { id: "Java",         group: 3, radius: 11, icon: "https://cdn.simpleicons.org/openjdk/white" },
+      { id: "Android Studio",group:3, radius: 11, icon: "https://cdn.simpleicons.org/androidstudio/white" },
+      { id: "Kotlin",       group: 3, radius: 11, icon: "https://cdn.simpleicons.org/kotlin/white" },
+      { id: "Firebase",     group: 3, radius: 11, icon: "https://cdn.simpleicons.org/firebase/white" },
+      { id: "Linux",        group: 3, radius: 11, icon: "https://cdn.simpleicons.org/linux/white" },
+      { id: "Nginx",        group: 3, radius: 11, icon: "https://cdn.simpleicons.org/nginx/white" },
+      { id: "Ngrok",        group: 3, radius: 11, icon: "https://cdn.simpleicons.org/ngrok/white" },
+      { id: "VMs",          group: 3, radius: 11, icon: "https://cdn.simpleicons.org/virtualbox/white" },
+      { id: "Figma",        group: 3, radius: 11, icon: "https://cdn.simpleicons.org/figma/white" },
+      { id: "AutoCAD",      group: 3, radius: 11, icon: "https://cdn.simpleicons.org/autocad/white" },
+      { id: "Diagrams",     group: 3, radius: 11, icon: "https://cdn.simpleicons.org/diagramsdotnet/white" }
+    ],
+    links: [
+      { source: "Engineer", target: "Frontend"      },
+      { source: "Engineer", target: "Backend"       },
+      { source: "Engineer", target: "DevOps"        },
+      { source: "Engineer", target: "Mobile Dev"    },
+      { source: "Engineer", target: "Networking"    },
+      { source: "Engineer", target: "System Design" },
+      { source: "Frontend",     target: "React"          },
+      { source: "Frontend",     target: "Next.js"        },
+      { source: "Frontend",     target: "Tailwind"       },
+      { source: "Frontend",     target: "Vue.js"         },
+      { source: "Frontend",     target: "Angular"        },
+      { source: "Backend",      target: "Node.js"        },
+      { source: "Backend",      target: "Python"         },
+      { source: "Backend",      target: "PostgreSQL"     },
+      { source: "Backend",      target: "MongoDB"        },
+      { source: "DevOps",       target: "Docker"         },
+      { source: "DevOps",       target: "Git"            },
+      { source: "DevOps",       target: "AWS"            },
+      { source: "DevOps",       target: "Jenkins"        },
+      { source: "DevOps",       target: "Kubernetes"     },
+      { source: "Mobile Dev",   target: "Java"           },
+      { source: "Mobile Dev",   target: "Android Studio" },
+      { source: "Mobile Dev",   target: "Firebase"       },
+      { source: "Mobile Dev",   target: "Kotlin"         },
+      { source: "Networking",   target: "Linux"          },
+      { source: "Networking",   target: "Nginx"          },
+      { source: "Networking",   target: "VMs"            },
+      { source: "Networking",   target: "Ngrok"          },
+      { source: "System Design",target: "Figma"          },
+      { source: "System Design",target: "AutoCAD"        },
+      { source: "System Design",target: "Diagrams"       }
+    ]
+  };
+
+  const mmSvg = d3.select("#mindmap-contact").append("svg")
+    .attr("width", mmW).attr("height", mmH);
+
+  const mmSim = d3.forceSimulation(mmData.nodes)
+    .force("link", d3.forceLink(mmData.links).id(d => d.id).distance(85))
+    .force("charge", d3.forceManyBody().strength(-320))
+    .force("collide", d3.forceCollide().radius(d => d.radius + 16))
+    .force("center", d3.forceCenter(mmW / 2, mmH / 2));
+
+
+  const mmLink = mmSvg.append("g").attr("class", "mm-links")
+    .selectAll("line").data(mmData.links).enter().append("line");
+
+  const mmNode = mmSvg.append("g").attr("class", "mm-nodes")
+    .selectAll("g").data(mmData.nodes).enter().append("g")
+    .call(d3.drag()
+      .on("start", (e, d) => { if (!e.active) mmSim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on("drag",  (e, d) => { d.fx = e.x; d.fy = e.y; })
+      .on("end",   (e, d) => { if (!e.active) mmSim.alphaTarget(0); d.fx = null; d.fy = null; })
+    );
+
+  mmNode.append("image")
+    .attr("href", d => d.icon)
+    .attr("width",  d => d.radius * 2)
+    .attr("height", d => d.radius * 2)
+    .attr("x", d => -d.radius)
+    .attr("y", d => -d.radius);
+
+  mmNode.append("text")
+    .text(d => d.id)
+    .attr("class", d => d.group === 1 ? "mm-center-text" : d.group === 2 ? "mm-category-text" : "mm-node-text")
+    .attr("dy", d => d.radius + 13);
+
+  mmSim.on("tick", () => {
+    mmNode.attr("transform", d => {
+      d.x = Math.max(d.radius, Math.min(mmW - d.radius, d.x));
+      d.y = Math.max(d.radius, Math.min(mmH - d.radius, d.y));
+      return `translate(${d.x},${d.y})`;
+    });
+    mmLink
+      .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+  });
+})();
 </script>
 <script src="https://www.goat1000.com/tagcanvas.min.js"></script>
   <script>
